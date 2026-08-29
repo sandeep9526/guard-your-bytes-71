@@ -1,14 +1,20 @@
-# Welcome to your Lovable project
+# Security Watcher
+
+https://github.com/sandeep9526/securitywatch
+
+I want to create a maketing or info website for this my package. read it properly and make a very nice website for it.
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://guard-your-bytes-71.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/71e7740a-5461-425a-ab97-2f5698fc73d6).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +26,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
