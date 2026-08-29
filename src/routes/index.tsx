@@ -20,7 +20,37 @@ export const Route = createFileRoute("/")({
           "Score-based threat detection for Express: SQL injection, XSS, brute force, rate limiting, and suspicious behavior. Warn, throttle, or block based on a cumulative score.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "securitywatch — Runtime security middleware for Express" },
+      {
+        name: "twitter:description",
+        content:
+          "Score-based threat detection for Express: SQL injection, XSS, brute force, rate limiting, and suspicious behavior.",
+      },
+      { name: "robots", content: "index, follow" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          name: "securitywatch",
+          description:
+            "Score-based runtime security middleware for Express with SQL injection, XSS, brute-force, rate-limit, and suspicious-behavior detection.",
+          codeRepository: REPO,
+          programmingLanguage: "TypeScript",
+          runtimePlatform: "Node.js",
+          license: "https://opensource.org/licenses/MIT",
+          isPartOf: {
+            "@type": "WebSite",
+            name: "securitywatch",
+            url: "/",
+          },
+        }),
+      },
     ],
   }),
   component: Index,
@@ -102,11 +132,17 @@ function RuleTable({ rows }: { rows: [string, string, string][] }) {
 function Index() {
   return (
     <div className="min-h-screen font-sans">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-foreground focus:shadow-md"
+      >
+        Skip to content
+      </a>
       {/* Header */}
       <header className="border-b">
         <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-6">
           <span className="font-mono text-sm font-semibold">securitywatch</span>
-          <nav className="flex items-center gap-5 text-sm text-muted-foreground">
+          <nav aria-label="Primary navigation" className="flex items-center gap-5 text-sm text-muted-foreground">
             <a href="#how-it-works" className="hover:text-foreground">How it works</a>
             <a href="#rules" className="hidden hover:text-foreground sm:inline">Rules</a>
             <a href="#config" className="hidden hover:text-foreground sm:inline">Config</a>
@@ -123,8 +159,9 @@ function Index() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="mx-auto max-w-3xl px-6 py-20 text-center">
+      <main id="main-content">
+        {/* Hero */}
+        <section className="mx-auto max-w-3xl px-6 py-20 text-center">
         <p className="font-mono text-sm text-muted-foreground">
           Express middleware · TypeScript · MIT
         </p>
@@ -155,10 +192,10 @@ function Index() {
             </a>
           </div>
         </div>
-      </section>
+        </section>
 
-      {/* 30-second setup */}
-      <Section id="setup" title="Set up in 30 seconds">
+        {/* 30-second setup */}
+        <Section id="setup" title="Set up in 30 seconds">
         <Code>{`import express from "express";
 import { securityWatch } from "securitywatch";
 
@@ -170,12 +207,12 @@ app.listen(3000);`}</Code>
           rate limiting, brute-force protection, and suspicious-behavior scoring — with
           sensible defaults.
         </p>
-      </Section>
+        </Section>
 
-      <hr className="mx-auto max-w-3xl" />
+        <hr className="mx-auto max-w-3xl" />
 
-      {/* How it works */}
-      <Section id="how-it-works" title="How it works">
+        {/* How it works */}
+        <Section id="how-it-works" title="How it works">
         <p>
           Each request is checked by several detection rules. Every rule returns a
           numeric score instead of a binary yes/no. Scores are summed, multiplied by the
@@ -219,12 +256,12 @@ app.listen(3000);`}</Code>
           will. Scores also accumulate per IP with automatic decay, so repeat offenders
           get blocked faster while normal users stay unaffected.
         </p>
-      </Section>
+        </Section>
 
-      <hr className="mx-auto max-w-3xl" />
+        <hr className="mx-auto max-w-3xl" />
 
-      {/* Detection rules */}
-      <Section id="rules" title="Detection rules">
+        {/* Detection rules */}
+        <Section id="rules" title="Detection rules">
         <h3 className="text-base font-semibold text-foreground">SQL injection — 10 patterns</h3>
         <RuleTable
           rows={[
@@ -267,12 +304,12 @@ app.listen(3000);`}</Code>
           blocking that resets on successful login, and payload anomaly checks
           (oversized bodies, null bytes, character density, nesting depth).
         </p>
-      </Section>
+        </Section>
 
-      <hr className="mx-auto max-w-3xl" />
+        <hr className="mx-auto max-w-3xl" />
 
-      {/* Configuration */}
-      <Section id="config" title="Configure what you need">
+        {/* Configuration */}
+        <Section id="config" title="Configure what you need">
         <p>Everything is optional. Turn rules on or off, set route sensitivity, and hook alerts:</p>
         <Code>{`app.use(securityWatch({
   bruteForce: {
@@ -305,12 +342,12 @@ app.listen(3000);`}</Code>
   onBlock: (req, info) => console.log(\`Blocked: \${info.ip}\`),
   onWarn: (req, info) => console.log(\`Warning: \${info.ip}\`),
 }));`}</Code>
-      </Section>
+        </Section>
 
-      <hr className="mx-auto max-w-3xl" />
+        <hr className="mx-auto max-w-3xl" />
 
-      {/* Use rules individually */}
-      <Section id="individual" title="Use rules individually">
+        {/* Use rules individually */}
+        <Section id="individual" title="Use rules individually">
         <p>Each detector is exported on its own if you only need one piece:</p>
         <Code>{`import { detectSQLInjection, detectXSS } from "securitywatch";
 
@@ -318,12 +355,12 @@ detectSQLInjection("' OR 1=1--");
 // { triggered: true, score: 5,
 //   rule: "sql-injection",
 //   reason: "SQL injection: tautology attack" }`}</Code>
-      </Section>
+        </Section>
 
-      <hr className="mx-auto max-w-3xl" />
+        <hr className="mx-auto max-w-3xl" />
 
-      {/* Safety */}
-      <Section id="safety" title="Built to be safe in production">
+        {/* Safety */}
+        <Section id="safety" title="Built to be safe in production">
         <ul className="list-disc space-y-2 pl-5">
           <li>All regexes use bounded quantifiers; input is truncated to 20K chars before scanning.</li>
           <li>Internal errors are caught and logged — requests proceed normally (fail-open).</li>
@@ -334,10 +371,10 @@ detectSQLInjection("' OR 1=1--");
         <p className="pt-2">
           Requires Node.js 18+ and Express 5+.
         </p>
-      </Section>
+        </Section>
 
-      {/* CTA */}
-      <section className="border-t bg-muted">
+        {/* CTA */}
+        <section className="border-t bg-muted">
         <div className="mx-auto max-w-3xl px-6 py-16 text-center">
           <h2 className="text-2xl font-semibold tracking-tight">Add it to your Express app</h2>
           <p className="mt-3 text-muted-foreground">One dependency. No external services. Nothing leaves your server.</p>
@@ -363,7 +400,8 @@ detectSQLInjection("' OR 1=1--");
             </a>
           </div>
         </div>
-      </section>
+        </section>
+      </main>
 
       {/* Footer */}
       <footer className="border-t">
